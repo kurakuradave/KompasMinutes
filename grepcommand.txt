@@ -1,0 +1,2 @@
+To get titles from the page, run:
+grep -Po 'kompas\.com\/read.*\"\>\K.*?(?=\<\/a\>)' step1.txt > step2.txt

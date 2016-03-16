@@ -142,7 +142,7 @@ function ChorusSpeech() {
 
         espeak.on( 'exit', function( code ) {  
             //speechPID = null;
-            if( callback ) callback();
+            self.emit( 'speechDone' );
         } );
     };
 
