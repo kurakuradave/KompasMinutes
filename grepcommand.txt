@@ -1,2 +1,8 @@
 To get titles from the page, run:
 grep -Po 'kompas\.com\/read.*\"\>\K.*?(?=\<\/a\>)' step1.txt > step2.txt
+
+
+grep -Poi 'latest__title.*?\K.*?(?=latest__group)' index.html > s1.txt
+grep -Poi 'kompas.com\\/read.*\">\K.*?(?=<)' s1.txt > s2.txt
+sed -i 's/\\"//g' s2.txt 
+sed -i 's/$/\./g' s2.txt
