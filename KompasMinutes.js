@@ -4,6 +4,7 @@ var cs = new ChorusSpeech();
 var spawn = require('child_process').spawn;
 var lines = [];
 var speechReady = true;
+var checkNewsInterval = 30 * 60 * 1000;
 
 cs.on( 'speechDone', function(  ) { speechReady = true } );
 
@@ -33,7 +34,7 @@ checkNews();
 // roll checking for news
 setInterval( function() {  
     checkNews();
-}, 120000 );
+}, checkNewsInterval );
 
 // roll playback
 setInterval( function() {
