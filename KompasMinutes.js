@@ -3,13 +3,14 @@ var ChorusSpeech = require( './ChorusSpeech.js' );
 var cs = new ChorusSpeech();
 var spawn = require('child_process').spawn;
 var lines = [];
-var speechReady = true;
+var speechReady = false;
 var checkNewsInterval = 30 * 60 * 1000;
+var readLinesInterval;
 
 cs.on( 'speechDone', function(  ) { speechReady = true } );
 
 var checkNews = function() {
-    var daJob = spawn( './KompasMinutes.sh' );  
+    var daJob = spawn( '/home/david/KompasMinutes/KompasMinutes.sh' );  
     daJob.on('exit', function (c) {
       console.log( "Done getting news" );
       fs.readFile( './text.txt', 'utf8', function( err, raw ) {
@@ -32,18 +33,26 @@ cs.setRate( 300 );
 checkNews();
 
 // roll checking for news
+// comment this block if want to use cron to set up the job
+/*
 setInterval( function() {  
     checkNews();
 }, checkNewsInterval );
+*/
 
 // roll playback
-setInterval( function() {
+readLinesInterval = setInterval( function() {
   if( lines.length > 0 ){
     if( speechReady ){
       speechReady = false;
       cs.say( lines[0] );
       lines.splice( 0, 1 );
     }
+  } else {
+    clearInterval( readLinesInterval );
+    cs.say( "Akhir Berita Untuk Periode Ini" );
+    console.log( "No more lines to read" );
+    process.exit( 0 );
   }
 }, 2000 );
 
