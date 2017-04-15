@@ -9,5 +9,6 @@ wget -O front.html www.kompas.com
 grep -Poi "h1.*big__title.*\>\K.*(?=\<)" front.html > text.txt
 grep -Poi "kompas\.com\/read.*?>\K.*(?=\<\/a)" front.html >> text.txt
 sed -i '/^<img.*$/d' text.txt
+sed -i 's/$/<Break time="1000ms"\/>/g' text.txt #comment out this line if you dont want ssml break tag
 
-#espeak -f text.txt -s 250 -v id
+#espeak -m -f text.txt -s 250 -v id
